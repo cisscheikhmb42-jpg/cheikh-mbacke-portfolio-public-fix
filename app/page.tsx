@@ -42,6 +42,16 @@ const mediaItems: MediaItem[] = [
     description: "Communication digitale et création de contenu pour un acteur du BTP, de la construction et de l'immobilier.",
   },
   {
+    id: "arrow-home-original-video",
+    kind: "video",
+    src: "/videos/arrow-home/arrow-home-original.mp4",
+    poster: "/videos/posters/arrow-home-original.jpg",
+    title: "Vidéo originale — Arrow Home Group",
+    category: "Social Media",
+    project: "Arrow Home Group",
+    description: "Vidéo originale réalisée pour Arrow Home Group, sans recours à l’IA.",
+  },
+  {
     id: "arrow-home-maouloud",
     kind: "image",
     src: "/images/arrow-home/maouloud-2026.webp",
@@ -167,6 +177,16 @@ const mediaItems: MediaItem[] = [
     project: "Forza Luxury",
     description: "Création visuelle destinée à promouvoir une offre de voyage VIP.",
   },
+  ...Array.from({ length: 7 }, (_, index) => ({
+    id: `tornadoes-${String(index + 1).padStart(2, "0")}`,
+    kind: "video" as const,
+    src: `/videos/tornadoes/tornadoes-${String(index + 1).padStart(2, "0")}.mp4`,
+    poster: `/videos/posters/tornadoes-${String(index + 1).padStart(2, "0")}.jpg`,
+    title: `Tornadoes Job Afrique — vidéo ${index + 1}`,
+    category: "AI Content" as const,
+    project: "Tornadoes Job Afrique",
+    description: "Création vidéo réalisée dans le cadre du contenu social media et de l’AI Content Lab.",
+  })),
 ];
 
 const tools = [
