@@ -209,7 +209,7 @@ export default function Home() {
 
       <section className="project-section" id="projets">
         <div className="max-shell section">
-          <SectionTitle index="02" title={<>Des projets pensés<br /><span>pour être vus.</span></>} text="Les images et vidéos ci-dessous proviennent directement des fichiers que tu as fournis. Clique sur un média pour l’ouvrir dans une expérience portfolio premium." />
+          <SectionTitle index="02" title={<>Des projets pensés<br /><span>pour être vus.</span></>} text="Les visuels ci-dessous proviennent directement des fichiers que tu as fournis. Clique sur un média pour l’ouvrir dans une expérience portfolio premium. Les vidéos seront ajoutées après leur mise en ligne." />
           <div className="filter-row" role="tablist" aria-label="Filtrer le portfolio">
             {filters.map((item) => (
               <button key={item} className={filter === item ? "filter active" : "filter"} onClick={() => setFilter(item)}>{item}</button>
