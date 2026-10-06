@@ -42,24 +42,86 @@ const mediaItems: MediaItem[] = [
     description: "Communication digitale et création de contenu pour un acteur du BTP, de la construction et de l'immobilier.",
   },
   {
+    id: "arrow-home-monday",
+    kind: "image",
+    src: "/images/arrow-home/lundi-motivation-senegal.png",
+    title: "Lundi Motivation — bâtir l’avenir au Sénégal",
+    category: "Design",
+    project: "Arrow Home Group",
+    description: "Visuel de communication réalisé pour les réseaux sociaux d’Arrow Home Group.",
+  },
+  {
     id: "forza-luxury",
     kind: "image",
     src: "/images/forza/forza-luxury.webp",
-    title: "Forza Luxury",
+    title: "Forza Luxury — L’élégance sur mesure",
     category: "Design",
     project: "Forza Luxury",
-    description: "Direction artistique premium, communication de marque et création de visuels social media.",
+    description: "Direction artistique premium et création de visuel social media.",
   },
-  ...Array.from({ length: 8 }, (_, index) => ({
-    id: `tornadoes-${String(index + 1).padStart(2, "0")}`,
-    kind: "video" as const,
-    src: `/videos/tornadoes/tornadoes-${String(index + 1).padStart(2, "0")}.mp4`,
-    poster: `/videos/tornadoes/tornadoes-${String(index + 1).padStart(2, "0")}.jpg`,
-    title: `Tornadoes Job Afrique — vidéo ${index + 1}`,
-    category: "AI Content" as const,
-    project: "Tornadoes Job Afrique",
-    description: "Vidéo et contenu social media produits dans le cadre de la création de contenu, dont des vidéos réalisées avec l'IA.",
-  })),
+  {
+    id: "forza-monde",
+    kind: "image",
+    src: "/images/forza/voyagez-monde-forza.png",
+    title: "Voyagez à travers le monde avec Forza",
+    category: "Design",
+    project: "Forza Luxury",
+    description: "Création visuelle pour la communication voyage et mobilité de Forza.",
+  },
+  {
+    id: "forza-luxury-voyage",
+    kind: "image",
+    src: "/images/forza/voyagez-forza-luxury.png",
+    title: "Voyagez avec Forza Luxury",
+    category: "Design",
+    project: "Forza Luxury",
+    description: "Visuel premium de communication voyage.",
+  },
+  {
+    id: "forza-voyage-luxe",
+    kind: "image",
+    src: "/images/forza/affiche-voyage-luxe-forza.png",
+    title: "Affiche de voyage de luxe Forza",
+    category: "Design",
+    project: "Forza Luxury",
+    description: "Création d’affiche destinée à la communication des offres de voyage.",
+  },
+  {
+    id: "forza-excellence",
+    kind: "image",
+    src: "/images/forza/excellence-sur-mesure.png",
+    title: "Forza Luxury — L’excellence sur mesure",
+    category: "Design",
+    project: "Forza Luxury",
+    description: "Visuel de marque premium fourni pour la communication de Forza Luxury.",
+  },
+  {
+    id: "forza-services",
+    kind: "image",
+    src: "/images/forza/services-sur-mesure.png",
+    title: "Forza Luxury — Services sur mesure",
+    category: "Design",
+    project: "Forza Luxury",
+    description: "Visuel présentant les services de la marque.",
+  },
+  {
+    id: "forza-paris",
+    kind: "image",
+    src: "/images/forza/vip-paris.png",
+    title: "Affiche de voyage VIP à Paris",
+    category: "Design",
+    project: "Forza Luxury",
+    description: "Création visuelle pour une communication voyage VIP.",
+  },
+  {
+    id: "forza-vip",
+    kind: "image",
+    src: "/images/forza/voyage-vip-forza.png",
+    title: "Voyage VIP Forza Luxury",
+    category: "Design",
+    project: "Forza Luxury",
+    description: "Visuel de communication premium pour l’offre voyage VIP.",
+  },
 ];
 
 const tools = [
@@ -209,7 +271,7 @@ export default function Home() {
 
       <section className="project-section" id="projets">
         <div className="max-shell section">
-          <SectionTitle index="02" title={<>Des projets pensés<br /><span>pour être vus.</span></>} text="Les visuels ci-dessous proviennent directement des fichiers que tu as fournis. Clique sur un média pour l’ouvrir dans une expérience portfolio premium. Les vidéos seront ajoutées après leur mise en ligne." />
+          <SectionTitle index="02" title={<>Des projets pensés<br /><span>pour être vus.</span></>} text="Les visuels ci-dessous proviennent directement des fichiers que tu as fournis. Clique sur un média pour l’ouvrir dans une expérience portfolio premium." />
           <div className="filter-row" role="tablist" aria-label="Filtrer le portfolio">
             {filters.map((item) => (
               <button key={item} className={filter === item ? "filter active" : "filter"} onClick={() => setFilter(item)}>{item}</button>
