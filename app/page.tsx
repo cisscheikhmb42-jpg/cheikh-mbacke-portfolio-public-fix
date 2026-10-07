@@ -210,7 +210,7 @@ const tools = [
 ];
 
 const experiences = [
-  ["Août 2026 — Aujourd’hui", "Arrow Home Group / Forza Luxury", "Community Manager · Social Media Manager · Digital Marketer · Content Creator"],
+  ["Août 2026 — Aujourd’hui", "Arrow Home Group / Forza Luxury", "Digital Marketer · Community Manager · Social Media Manager · Content Creator"],
   ["Janvier 2026 — Mai 2026", "Tornadoes Job Afrique", "Community Manager / Créateur de Contenu Digital & Social Media"],
   ["2025 — 2026", "Freelance", "Community Manager"],
   ["Décembre 2021 — Mars 2022", "Prévoyance Assurance Sénégal", "Assistant Assurance & Relation Client"],
@@ -429,6 +429,8 @@ export default function Home() {
             <EduItem year="2021" title="Licence Gestion des Entreprises" org="Institut Supérieur de Management — ISM" />
             <EduItem year="CERTIFICATION" title="Marketing Numérique" org="Google Atelier Numérique" />
             <EduItem year="CERTIFICATION" title="Commerce Digital" org="Force N / Université Virtuelle du Sénégal (UVS)" />
+            <EduItem year="CERTIFICATION" title="Création de contenu" org="Africa Digital Youth Hub" />
+            <EduItem year="CERTIFICATION" title="Gestion de projet" org="Élan Teranga" />
           </div>
         </div>
       </section>
