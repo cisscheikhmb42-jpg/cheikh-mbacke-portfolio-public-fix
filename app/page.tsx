@@ -180,7 +180,7 @@ const mediaItems: MediaItem[] = [
   ...Array.from({ length: 7 }, (_, index) => ({
     id: `tornadoes-${String(index + 1).padStart(2, "0")}`,
     kind: "video" as const,
-    src: `/videos/tornadoes/tornadoes-${String(index + 1).padStart(2, "0")}.mp4`,
+    src: `/videos/tornadoes-${String(index + 1).padStart(2, "0")}.mp4`,
     poster: `/videos/posters/tornadoes-${String(index + 1).padStart(2, "0")}.jpg`,
     title: `Tornadoes Job Afrique — vidéo ${index + 1}`,
     category: "AI Content" as const,
