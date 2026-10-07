@@ -429,7 +429,7 @@ export default function Home() {
             <EduItem year="2021" title="Licence Gestion des Entreprises" org="Institut Supérieur de Management — ISM" />
             <EduItem year="CERTIFICATION" title="Marketing Numérique" org="Google Atelier Numérique" />
             <EduItem year="CERTIFICATION" title="Commerce Digital" org="Force N / Université Virtuelle du Sénégal (UVS)" />
-            <EduItem year="CERTIFICATION" title="Création de contenu" org="Africa Digital Youth Hub" />
+            <EduItem year="CERTIFICATION" title="Création de contenu IA" org="Africa Digital Youth Hub" />
             <EduItem year="CERTIFICATION" title="Gestion de projet" org="Élan Teranga" />
           </div>
         </div>
