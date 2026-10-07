@@ -299,7 +299,7 @@ export default function Home() {
           <div className="profile-frame">
             <div className="profile-accent" />
             <Image
-              src="/images/profile-cheikh.webp"
+              src="/images/profile-cheikh-800.webp"
               alt="Cheikh Mbacke Cissé — Digital Marketing & Social Media Specialist"
               fill
               priority
