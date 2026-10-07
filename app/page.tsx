@@ -351,7 +351,16 @@ export default function Home() {
                     <Image src={item.src} alt={item.title} fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" />
                   ) : (
                     <>
-                      <Image src={item.poster!} alt="" fill sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" />
+                      <video
+                        className="portfolio-video-preview"
+                        src={item.src}
+                        muted
+                        playsInline
+                        autoPlay
+                        loop
+                        preload="metadata"
+                        aria-hidden="true"
+                      />
                       <div className="video-badge"><Play size={15} fill="currentColor" /> Vidéo</div>
                     </>
                   )}
