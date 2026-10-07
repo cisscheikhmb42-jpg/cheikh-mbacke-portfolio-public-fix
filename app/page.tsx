@@ -316,8 +316,16 @@ export default function Home() {
         </div>
       </section>
 
-      <div className="signal-strip">
-        {['MARKETING DIGITAL', 'SOCIAL MEDIA', 'CREATION DE CONTENU', 'AI CONTENT', 'CREATIVE STRATEGY'].map((label) => <span key={label}>{label}</span>)}
+      <div className="marquee-strip" aria-label="Expertises">
+        <div className="marquee-track">
+          {[0, 1].map((copy) => (
+            <div className="marquee-group" aria-hidden={copy === 1} key={copy}>
+              {['MARKETING DIGITAL', 'SOCIAL MEDIA', 'CRÉATION DE CONTENU', 'AI CONTENT', 'CREATIVE STRATEGY'].map((label) => (
+                <span key={label}><b>✦</b>{label}</span>
+              ))}
+            </div>
+          ))}
+        </div>
       </div>
 
       <section className="section max-shell" id="expertises">
@@ -346,6 +354,18 @@ export default function Home() {
             {filters.map((item) => (
               <button key={item} className={filter === item ? "filter active" : "filter"} onClick={() => setFilter(item)}>{item}</button>
             ))}
+          </div>
+
+          <div className="portfolio-marquee" aria-hidden="true">
+            <div className="portfolio-marquee-track">
+              {[0, 1].map((copy) => (
+                <div className="portfolio-marquee-group" key={copy}>
+                  {['ARROW HOME GROUP', 'FORZA LUXURY', 'TORNADOES JOB AFRIQUE', 'DIGITAL MARKETING', 'AI CONTENT'].map((label) => (
+                    <span key={label}>{label}<i>✦</i></span>
+                  ))}
+                </div>
+              ))}
+            </div>
           </div>
 
           <div className="portfolio-grid">
