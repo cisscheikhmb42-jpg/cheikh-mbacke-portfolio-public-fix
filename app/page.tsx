@@ -44,7 +44,7 @@ const mediaItems: MediaItem[] = [
   {
     id: "arrow-home-original-video",
     kind: "video",
-    src: "/videos/arrow-home/arrow-home-original.mp4",
+    src: "/videos/arrow-home-original.mp4",
     poster: "/videos/posters/arrow-home-original.jpg",
     title: "Vidéo originale — Arrow Home Group",
     category: "Social Media",
