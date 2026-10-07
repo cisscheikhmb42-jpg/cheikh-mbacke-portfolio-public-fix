@@ -293,17 +293,22 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="hero-visual" aria-hidden="true">
+        <div className="hero-visual">
           <div className="hero-gridline grid-a" />
           <div className="hero-gridline grid-b" />
-          <div className="orb-shell">
-            <div className="orb-ring ring-1" />
-            <div className="orb-ring ring-2" />
-            <div className="orb-ring ring-3" />
-            <div className="orb-core">
-              <Sparkles size={22} />
-              <b>AI</b>
-              <small>CONTENT LAB</small>
+          <div className="profile-frame">
+            <div className="profile-accent" />
+            <Image
+              src="/images/profile-cheikh.webp"
+              alt="Cheikh Mbacke Cissé — Digital Marketing & Social Media Specialist"
+              fill
+              priority
+              sizes="(max-width: 680px) 100vw, 520px"
+              className="profile-image"
+            />
+            <div className="profile-label">
+              <span>CHEIKH MBACKE CISSÉ</span>
+              <small>Digital Marketing · Social Media · AI Content</small>
             </div>
           </div>
           <div className="floating-card card-left"><small>01</small><b>STRATEGY</b><span>Digital Marketing</span></div>
