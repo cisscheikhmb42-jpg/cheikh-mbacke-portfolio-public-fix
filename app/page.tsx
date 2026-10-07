@@ -210,7 +210,7 @@ const tools = [
 ];
 
 const experiences = [
-  ["Août 2026 — Aujourd’hui", "Arrow Home Group / Forza Luxury", "Community Manager & Social Media Manager"],
+  ["Août 2026 — Aujourd’hui", "Arrow Home Group / Forza Luxury", "Community Manager · Social Media Manager · Digital Marketer · Content Creator"],
   ["Janvier 2026 — Mai 2026", "Tornadoes Job Afrique", "Community Manager / Créateur de Contenu Digital & Social Media"],
   ["2025 — 2026", "Freelance", "Community Manager"],
   ["Décembre 2021 — Mars 2022", "Prévoyance Assurance Sénégal", "Assistant Assurance & Relation Client"],
