@@ -56,15 +56,7 @@ export const hero = {
   },
   ctaProjects: { fr: "Voir mes projets", en: "See my work" },
   ctaWhatsapp: { fr: "WhatsApp", en: "WhatsApp" },
-  video: {
-    src: "/videos/arrow-home-original.mp4",
-    poster: "/videos/posters/arrow-home-original.webp",
-    caption: { fr: "Vidéo originale — Arrow Home Group", en: "Original video — Arrow Home Group" },
-    label: {
-      fr: "Vidéo originale réalisée pour Arrow Home Group, diffusée en boucle sans le son",
-      en: "Original video made for Arrow Home Group, looping without sound",
-    },
-  },
+  portraitAlt: { fr: "Portrait de Cheikh Mbacke Cisse en costume sombre et cravate", en: "Portrait of Cheikh Mbacke Cisse in a dark suit and tie" },
   marquee: [
     "Marketing digital",
     "Community management",
@@ -112,6 +104,10 @@ export const about = {
       en: "I use AI and automation to produce faster, measure and keep improving.",
     },
   ],
+  statement: {
+    fr: "Diplômé d'un Master en Marketing Digital, je relie stratégie, création et technologie : réseaux sociaux, campagnes, visuels, vidéos et automatisation IA, au service de marques qui veulent grandir.",
+    en: "With a Master's in Digital Marketing, I connect strategy, creation and technology: social media, campaigns, visuals, videos and AI automation, for brands that want to grow.",
+  },
   // Le 3e chiffre (projets réalisés) est calculé automatiquement depuis la galerie ci-dessous.
   stats: [
     { value: "4", label: { fr: "ans d'expérience — marketing digital, community management, social media, création de contenu", en: "years of experience — digital marketing, community management, social media, content creation" } },
@@ -189,7 +185,19 @@ export type MediaItem = {
   description: T;
   alt: T;
   href?: string; // lien externe (ex. site web en ligne)
+  ai?: boolean; // true = vidéo générée avec l'IA (classée dans « Vidéos IA »)
 };
+
+/* Classement par format (onglets de la galerie) */
+export type Format = "posters" | "videos" | "ai" | "sites";
+export const formats: { id: Format; label: T; text: T }[] = [
+  { id: "posters", label: { fr: "Affiches & visuels", en: "Posters & visuals" }, text: { fr: "Affiches publicitaires, flyers et visuels pour les réseaux sociaux.", en: "Ad posters, flyers and social media visuals." } },
+  { id: "videos", label: { fr: "Vidéos originales", en: "Original videos" }, text: { fr: "Vidéos tournées et montées : chantiers, avant / après, publicités avec voix off.", en: "Filmed and edited videos: sites, before / after, voice-over ads." } },
+  { id: "ai", label: { fr: "Vidéos IA", en: "AI videos" }, text: { fr: "Vidéos produites avec l'intelligence artificielle.", en: "Videos produced with artificial intelligence." } },
+  { id: "sites", label: { fr: "Sites web & applications", en: "Websites & apps" }, text: { fr: "Sites et applications web créés et déployés en ligne.", en: "Websites and web apps built and deployed online." } },
+];
+export const formatOf = (m: MediaItem): Format =>
+  m.kind === "video" ? (m.ai ? "ai" : "videos") : m.domain === "web" ? "sites" : "posters";
 
 const v = (n: number) => String(n).padStart(2, "0");
 
@@ -278,7 +286,7 @@ export const media: MediaItem[] = [
   },
   // — FORZA Luxury —
   {
-    id: "forza-video-parfums", kind: "video", src: "/videos/forza/forza-parfums-encens.mp4", poster: "/videos/posters/forza-parfums-encens.webp", width: 720, height: 1280, brand: "forza", domain: "content",
+    id: "forza-video-parfums", kind: "video", src: "/videos/forza/forza-parfums-encens.mp4", poster: "/videos/posters/forza-parfums-encens.webp", width: 720, height: 1280, brand: "forza", domain: "content", ai: true,
     title: { fr: "FORZA Parfums & Encens — vidéo publicitaire voix off", en: "FORZA Perfumes & Incense — voice-over ad video" },
     description: { fr: "Vidéo publicitaire avec voix off pour la gamme FORZA Parfums & Encens : « Offrez-vous une signature olfactive ».", en: "Voice-over ad video for the FORZA Perfumes & Incense range: “Treat yourself to a signature scent”." },
     alt: { fr: "Vidéo verticale FORZA : logo doré « FORZA Parfums & Encens » sur fond noir", en: "FORZA vertical video: gold “FORZA Parfums & Encens” logo on a black background" },
@@ -354,6 +362,7 @@ export const media: MediaItem[] = [
     width: x.w,
     height: x.h,
     brand: "tornadoes" as const,
+    ai: true,
     domain: "content" as const,
     title: { fr: `Tornadoes Job Afrique — vidéo ${x.n}`, en: `Tornadoes Job Afrique — video ${x.n}` },
     description: { fr: "Création vidéo réalisée dans le cadre du contenu social media et de l'AI Content Lab.", en: "Video created as part of social media content and the AI Content Lab." },
@@ -448,16 +457,43 @@ export const method: { title: T; text: T }[] = [
 ];
 
 /* ---------- 05. Outils ---------- */
-// logo = clé du tracé SVG dans components/logo-paths.ts (vide = nom typographique)
-export const tools: { name: string; logo?: string }[] = [
-  { name: "Claude", logo: "claude" },
-  { name: "Claude Code", logo: "claude" },
-  { name: "Make", logo: "make" },
-  { name: "Canva" },
-  { name: "Meta Ads", logo: "meta" },
-  { name: "Vercel", logo: "vercel" },
-  { name: "GitHub", logo: "github" },
-  { name: "Supabase", logo: "supabase" },
+// logo = clé du tracé SVG dans components/logo-paths.ts (vide = nom en typographie)
+export const toolGroups: { title: T; tools: { name: string; logo?: string }[] }[] = [
+  {
+    title: { fr: "Marketing digital & publicité", en: "Digital marketing & ads" },
+    tools: [
+      { name: "Meta Ads", logo: "meta" },
+      { name: "Meta Business Suite", logo: "facebook" },
+      { name: "Google Ads", logo: "googleads" },
+      { name: "Google Analytics", logo: "googleanalytics" },
+      { name: "TikTok", logo: "tiktok" },
+      { name: "Instagram", logo: "instagram" },
+    ],
+  },
+  {
+    title: { fr: "Création de contenu", en: "Content creation" },
+    tools: [{ name: "Canva" }, { name: "CapCut" }],
+  },
+  {
+    title: { fr: "IA & automatisation", en: "AI & automation" },
+    tools: [
+      { name: "Claude", logo: "claude" },
+      { name: "Claude Code", logo: "claude" },
+      { name: "ChatGPT" },
+      { name: "Gemini", logo: "gemini" },
+      { name: "Make", logo: "make" },
+    ],
+  },
+  {
+    title: { fr: "Web & déploiement", en: "Web & deployment" },
+    tools: [
+      { name: "Vercel", logo: "vercel" },
+      { name: "GitHub", logo: "github" },
+      { name: "Supabase", logo: "supabase" },
+      { name: "WordPress", logo: "wordpress" },
+      { name: "Shopify", logo: "shopify" },
+    ],
+  },
 ];
 
 /* ---------- 06. Parcours & certificats ---------- */
@@ -493,14 +529,7 @@ export const credentials: { domain: T; items: { year: string; title: T; org: str
   },
 ];
 
-/* ---------- 07. Témoignages ---------- */
-export const testimonials: { quote: T; name: string; company: string; photo?: string }[] = [
-  { quote: TODO, name: "[À COMPLÉTER]", company: "[À COMPLÉTER]" },
-  { quote: TODO, name: "[À COMPLÉTER]", company: "[À COMPLÉTER]" },
-  { quote: TODO, name: "[À COMPLÉTER]", company: "[À COMPLÉTER]" },
-];
-
-/* ---------- 08. Contact ---------- */
+/* ---------- 07. Contact ---------- */
 export const contact = {
   title: { fr: "Créons ensemble.", en: "Let's create together." },
   text: {
@@ -527,7 +556,6 @@ export const ui = {
     method: { fr: "Ma méthode", en: "My method" },
     tools: { fr: "Outils & stack", en: "Tools & stack" },
     background: { fr: "Parcours & certificats", en: "Background & certificates" },
-    testimonials: { fr: "Témoignages", en: "Testimonials" },
     contact: { fr: "Contact", en: "Contact" },
   },
   projectsTitle: { fr: "Des projets pensés pour être vus.", en: "Work made to be seen." },
@@ -535,14 +563,18 @@ export const ui = {
   methodTitle: { fr: "Quatre étapes, aucune perdue.", en: "Four steps, none wasted." },
   toolsTitle: { fr: "Les outils avec lesquels je travaille.", en: "The tools I work with." },
   backgroundTitle: { fr: "Un parcours en mouvement.", en: "A path in motion." },
-  testimonialsTitle: { fr: "Ce qu'ils en disent.", en: "What they say." },
   experience: { fr: "Expérience", en: "Experience" },
   diplomas: { fr: "Diplômes & certificats", en: "Degrees & certificates" },
   diploma: { fr: "Diplôme", en: "Degree" },
   certificate: { fr: "Certificat", en: "Certificate" },
   all: { fr: "Tous", en: "All" },
   caseStudies: { fr: "Études de cas", en: "Case studies" },
-  gallery: { fr: "Galerie", en: "Gallery" },
+  gallery: { fr: "Toutes les réalisations, par format", en: "All work, by format" },
+  showreelKicker: { fr: "Showreel — vidéos originales", en: "Showreel — original videos" },
+  showreelWord: { fr: "Réalisations", en: "Showreel" },
+  scrollHint: { fr: "Faites défiler", en: "Scroll" },
+  cursorView: { fr: "Voir", en: "View" },
+  cursorPlay: { fr: "Lire", en: "Play" },
   items: { fr: "réalisations", en: "pieces" },
   open: { fr: "Voir l'étude de cas", en: "View case study" },
   role: { fr: "Mon rôle", en: "My role" },

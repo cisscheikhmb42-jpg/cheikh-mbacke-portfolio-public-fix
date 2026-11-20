@@ -50,10 +50,12 @@ function SmoothScroll() {
   return null;
 }
 
-/** Curseur personnalisé — uniquement souris (pointer: fine) et sans reduced-motion. */
+/** Curseur personnalisé — souris uniquement (pointer: fine), sans reduced-motion.
+ *  Sur un élément [data-cursor="Voir"], l'anneau grossit et affiche le libellé. */
 function Cursor() {
   const dot = useRef<HTMLDivElement>(null);
   const ring = useRef<HTMLDivElement>(null);
+  const text = useRef<HTMLSpanElement>(null);
   const [on, setOn] = useState(false);
 
   useEffect(() => {
@@ -62,19 +64,29 @@ function Cursor() {
     if (!fine || reduce) return;
     setOn(true);
     document.documentElement.classList.add("has-cursor");
-    let x = innerWidth / 2, y = innerHeight / 2, rx = x, ry = y, raf = 0, hover = false;
+    let x = innerWidth / 2, y = innerHeight / 2, rx = x, ry = y, raf = 0, hover = false, label = "";
     const move = (e: PointerEvent) => {
       x = e.clientX; y = e.clientY;
       const el = e.target as Element | null;
-      hover = !!el?.closest?.("a, button, [role=button], input, textarea, select, label");
+      const lab = el?.closest?.("[data-cursor]")?.getAttribute("data-cursor") ?? "";
+      hover = !!el?.closest?.("a, button, [role=button], [role=tab], input, textarea, select, label");
+      if (lab !== label) {
+        label = lab;
+        if (text.current) text.current.textContent = lab;
+        if (ring.current) {
+          ring.current.style.width = ring.current.style.height = lab ? "84px" : "36px";
+          ring.current.style.background = lab ? "var(--accent)" : "transparent";
+        }
+      }
     };
     const loop = () => {
       rx += (x - rx) * 0.18; ry += (y - ry) * 0.18;
       if (dot.current) dot.current.style.transform = `translate3d(${x}px, ${y}px, 0) translate(-50%, -50%)`;
       if (ring.current) {
-        ring.current.style.transform = `translate3d(${rx}px, ${ry}px, 0) translate(-50%, -50%) scale(${hover ? 1.8 : 1})`;
-        ring.current.style.borderColor = hover ? "var(--accent)" : "rgba(244,241,234,0.4)";
+        ring.current.style.transform = `translate3d(${rx}px, ${ry}px, 0) translate(-50%, -50%) scale(${hover && !label ? 1.6 : 1})`;
+        ring.current.style.borderColor = hover || label ? "var(--accent)" : "rgba(244,241,234,0.4)";
       }
+      if (dot.current) dot.current.style.opacity = label ? "0" : "1";
       raf = requestAnimationFrame(loop);
     };
     window.addEventListener("pointermove", move, { passive: true });
@@ -89,8 +101,14 @@ function Cursor() {
   if (!on) return null;
   return (
     <>
-      <div ref={dot} aria-hidden className="pointer-events-none fixed left-0 top-0 z-[90] h-1.5 w-1.5 rounded-full bg-accent" />
-      <div ref={ring} aria-hidden className="pointer-events-none fixed left-0 top-0 z-[90] h-9 w-9 rounded-full border transition-[border-color,scale] duration-200" />
+      <div ref={dot} aria-hidden className="pointer-events-none fixed left-0 top-0 z-[95] h-1.5 w-1.5 rounded-full bg-accent" />
+      <div
+        ref={ring}
+        aria-hidden
+        className="pointer-events-none fixed left-0 top-0 z-[95] flex h-9 w-9 items-center justify-center rounded-full border transition-[width,height,background-color,border-color] duration-300"
+      >
+        <span ref={text} className="mono text-[11px] font-medium text-bg" />
+      </div>
     </>
   );
 }

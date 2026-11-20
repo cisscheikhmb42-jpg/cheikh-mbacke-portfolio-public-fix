@@ -1,5 +1,5 @@
 import { Projects } from "@/components/projects";
-import { About, Background, Contact, Footer, Header, Hero, Method, Services, Testimonials, Tools } from "@/components/sections";
+import { About, Background, Contact, Footer, Header, Hero, Method, Services, Tools } from "@/components/sections";
 
 export default function Home() {
   return (
@@ -13,7 +13,6 @@ export default function Home() {
         <Method />
         <Tools />
         <Background />
-        <Testimonials />
         <Contact />
       </main>
       <Footer />

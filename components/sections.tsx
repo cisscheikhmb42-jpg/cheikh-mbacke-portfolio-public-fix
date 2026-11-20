@@ -1,16 +1,16 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useState } from "react";
-import { preload } from "react-dom";
-import { useReducedMotion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { ArrowDown, ArrowUpRight, Download, Linkedin, Mail, Menu, X } from "lucide-react";
 import { useLang } from "./providers";
 import { Magnetic, Reveal, SectionHead, WhatsAppIcon, btnGhost, btnPrimary } from "./ui";
+import { CountUp, CrossMarquee, Preloader, ScrollWords, SplitText } from "./motion";
 import { logoPaths } from "./logo-paths";
 import {
   about, contact, credentials, experience, hero, media, method, nav, profile, services,
-  testimonials, tools, ui, waLink,
+  toolGroups, ui, waLink,
 } from "@/data/content";
 
 /* ---------------- Header ---------------- */
@@ -97,87 +97,78 @@ function LangSwitch({ lang, setLang }: { lang: string; setLang: (l: "fr" | "en")
 export function Hero() {
   const { t, lang } = useLang();
   const reduce = useReducedMotion();
+  const ref = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
+  const imgY = useTransform(scrollYProgress, [0, 1], ["0%", "18%"]);
+  const imgScale = useTransform(scrollYProgress, [0, 1], [1, 1.08]);
   const words = lang === "fr" ? hero.marquee : hero.marqueeEn;
-  preload(hero.video.poster, { as: "image", fetchPriority: "high" });
   return (
-    <section id="top" aria-labelledby="hero-title" className="relative pt-28 md:pt-36">
-      <div className="shell grid items-end gap-10 pb-14 md:grid-cols-12 md:pb-20">
-        <div className="md:col-span-8">
-          <p className="mono mb-6 flex items-center gap-3 text-xs text-muted">
-            <span className="text-accent">00</span>
-            <span className="h-px w-8 bg-line" />
-            {t(hero.kicker)}
-          </p>
-          <Reveal>
-            <h1 id="hero-title" className="display text-[clamp(3.25rem,10.5vw,9.5rem)]">
-              {t(hero.title)}
-            </h1>
-          </Reveal>
-          <Reveal delay={0.1}>
-            <p className="mt-8 max-w-xl text-base leading-relaxed text-muted md:text-lg">{t(hero.subtitle)}</p>
-          </Reveal>
-          <Reveal delay={0.2} className="mt-10 flex flex-col gap-3 sm:flex-row">
-            <Magnetic><a href="#projets" className={btnPrimary}>{t(hero.ctaProjects)} <ArrowDown size={16} /></a></Magnetic>
-            <Magnetic><a href={waLink("Bonjour Cheikh, j'ai vu votre portfolio.")} target="_blank" rel="noreferrer" className={btnGhost}><WhatsAppIcon size={16} /> {t(hero.ctaWhatsapp)}</a></Magnetic>
-          </Reveal>
+    <>
+      <Preloader label={`${profile.name} — Portfolio`} />
+      <section ref={ref} id="top" aria-labelledby="hero-title" className="relative overflow-hidden pt-24 md:pt-32">
+        <span aria-hidden className="display text-outline pointer-events-none absolute -right-[4vw] top-10 hidden select-none whitespace-nowrap text-[22vw] leading-none opacity-60 md:block">
+          CMC
+        </span>
+        <div className="shell relative grid items-end gap-10 pb-12 md:grid-cols-12 md:pb-20">
+          <div className="md:col-span-7 lg:col-span-8">
+            <p className="mono mb-6 flex items-center gap-3 text-xs text-muted">
+              <span className="text-accent">00</span>
+              <span className="h-px w-8 bg-line" />
+              {t(hero.kicker)}
+            </p>
+            <SplitText as="h1" id="hero-title" waitIntro text={t(hero.title)} className="display text-[clamp(3.25rem,9.5vw,9rem)]" />
+            <Reveal delay={0.1}>
+              <p className="mt-8 max-w-xl text-base leading-relaxed text-muted md:text-lg">{t(hero.subtitle)}</p>
+            </Reveal>
+            <Reveal delay={0.2} className="mt-10 flex flex-col gap-3 sm:flex-row">
+              <Magnetic><a href="#projets" className={btnPrimary}>{t(hero.ctaProjects)} <ArrowDown size={16} /></a></Magnetic>
+              <Magnetic><a href={waLink("Bonjour Cheikh, j'ai vu votre portfolio.")} target="_blank" rel="noreferrer" className={btnGhost}><WhatsAppIcon size={16} /> {t(hero.ctaWhatsapp)}</a></Magnetic>
+            </Reveal>
+          </div>
+          <div className="md:col-span-5 lg:col-span-4">
+            <figure className="relative mx-auto aspect-[4/5] w-full max-w-[340px] overflow-hidden rounded-[22px] border border-line bg-bg-soft md:ml-auto">
+              <motion.div className="absolute inset-0" style={reduce ? undefined : { y: imgY, scale: imgScale }}>
+                <Image src={profile.photo} alt={t(hero.portraitAlt)} fill priority quality={70} sizes="(max-width: 768px) 80vw, 340px" className="object-cover object-top" />
+              </motion.div>
+              <span aria-hidden className="absolute left-3 top-3 h-5 w-5 border-l border-t border-accent" />
+              <span aria-hidden className="absolute right-3 top-3 h-5 w-5 border-r border-t border-accent" />
+              <span aria-hidden className="absolute bottom-3 left-3 h-5 w-5 border-b border-l border-accent" />
+              <span aria-hidden className="absolute bottom-3 right-3 h-5 w-5 border-b border-r border-accent" />
+              <figcaption className="mono absolute inset-x-0 bottom-0 bg-gradient-to-t from-bg/90 to-transparent p-5 pt-12 text-[10px] text-text">
+                <span className="text-accent">●</span> {profile.name}<br />
+                <span className="text-muted">{t(profile.role)} · {t(profile.location)}</span>
+              </figcaption>
+            </figure>
+          </div>
         </div>
-        <Reveal delay={0.15} className="md:col-span-4">
-          <figure className="relative mx-auto aspect-[9/16] w-full max-w-[300px] overflow-hidden rounded-[22px] border border-line bg-bg-soft md:ml-auto">
-            <video
-              className="h-full w-full object-cover"
-              src={hero.video.src}
-              poster={hero.video.poster}
-              autoPlay={!reduce}
-              muted
-              loop
-              playsInline
-              preload="metadata"
-              aria-label={t(hero.video.label)}
-            />
-            <figcaption className="mono absolute inset-x-0 bottom-0 bg-gradient-to-t from-bg/90 to-transparent p-4 pt-10 text-[10px] text-text">
-              <span className="text-accent">●</span> {t(hero.video.caption)}
-            </figcaption>
-          </figure>
-        </Reveal>
-      </div>
-      <p className="sr-only">{words.join(", ")}</p>
-      <div className="overflow-hidden border-y border-line py-5">
-        <div className="marquee" aria-hidden>
-          {[0, 1].map((k) => (
-            <div key={k} className="flex shrink-0 items-center">
-              {words.map((w) => (
-                <span key={w} className="flex items-center gap-8 pr-8 font-serif text-3xl italic md:text-5xl">
-                  {w}<span className="text-base not-italic text-accent">✦</span>
-                </span>
-              ))}
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
+        <p className="sr-only">{words.join(", ")}</p>
+        <CrossMarquee words={words} />
+      </section>
+    </>
   );
 }
 
 /* ---------------- 01. À propos ---------------- */
 export function About() {
   const { t } = useLang();
-  const stats = [...about.stats.map((s) => ({ value: s.value, label: t(s.label) })), { value: String(media.length), label: t(about.projectsLabel) }];
+  const stats = [...about.stats.map((s) => ({ value: Number(s.value), label: t(s.label) })), { value: media.length, label: t(about.projectsLabel) }];
   return (
     <section id="a-propos" className="shell scroll-mt-20 py-24 md:py-36">
       <SectionHead index="01" label={t(ui.sections.about)} title={t(about.title)} />
       <div className="grid gap-12 md:grid-cols-12">
-        <Reveal className="md:col-span-3">
-          <div className="relative aspect-square w-40 overflow-hidden rounded-full border border-line md:w-full md:max-w-[220px]">
-            <Image src={profile.photo} alt={`Portrait de ${profile.name}, en costume sombre`} fill sizes="220px" className="object-cover grayscale" />
-          </div>
-          <p className="mt-5 text-sm">{profile.name}</p>
-          <p className="mono mt-1 text-[11px] text-muted">{t(profile.role)} · {t(profile.location)}</p>
-        </Reveal>
+        <div className="md:col-span-3">
+          <p className="mono text-[11px] text-muted">{profile.name}</p>
+          <p className="mono mt-1 text-[11px] text-accent">{t(profile.role)}</p>
+          <a href={profile.cv} download className="mt-6 inline-flex items-center gap-2 text-sm text-muted underline-offset-4 hover:text-accent hover:underline">
+            <Download size={15} /> {t(ui.downloadCv)} (PDF)
+          </a>
+        </div>
         <div className="md:col-span-9">
-          <ol className="divide-y divide-line border-y border-line">
+          <ScrollWords text={t(about.statement)} className="font-serif text-[clamp(1.9rem,4.2vw,3.6rem)] leading-[1.08]" />
+          <ol className="mt-16 divide-y divide-line border-y border-line">
             {about.lines.map((l, i) => (
-              <Reveal as="li" key={i} delay={i * 0.05} className="grid grid-cols-[2.5rem_1fr] gap-3 py-5 text-lg leading-snug md:text-2xl">
-                <span className="mono pt-1 text-xs text-muted">{String(i + 1).padStart(2, "0")}</span>
+              <Reveal as="li" key={i} delay={i * 0.05} className="grid grid-cols-[2.5rem_1fr] gap-3 py-4 text-base leading-snug text-muted md:text-lg">
+                <span className="mono pt-1 text-xs text-accent">{String(i + 1).padStart(2, "0")}</span>
                 <span>{t(l)}</span>
               </Reveal>
             ))}
@@ -187,15 +178,12 @@ export function About() {
               <Reveal key={i} delay={i * 0.08} className="bg-bg p-6 md:p-8">
                 <dt className="sr-only">{s.label}</dt>
                 <dd>
-                  <span className="display block text-7xl text-accent md:text-8xl">{s.value}</span>
+                  <span className="display block text-7xl text-accent md:text-8xl"><CountUp value={s.value} /></span>
                   <span className="mt-4 block text-sm leading-relaxed text-muted">{s.label}</span>
                 </dd>
               </Reveal>
             ))}
           </dl>
-          <a href={profile.cv} download className="mt-8 inline-flex items-center gap-2 text-sm text-muted underline-offset-4 hover:text-accent hover:underline">
-            <Download size={15} /> {t(ui.downloadCv)} (PDF)
-          </a>
         </div>
       </div>
     </section>
@@ -228,23 +216,66 @@ export function Services() {
   );
 }
 
-/* ---------------- 04. Méthode ---------------- */
+/* ---------------- 04. Méthode (épinglée) ---------------- */
 export function Method() {
   const { t } = useLang();
+  const reduce = useReducedMotion();
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] });
+  const [active, setActive] = useState(0);
+  useEffect(() => scrollYProgress.on("change", (v) => setActive(Math.min(method.length - 1, Math.floor(v * method.length)))), [scrollYProgress]);
+  const bar = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
+
+  const head = <SectionHead index="04" label={t(ui.sections.method)} title={t(ui.methodTitle)} />;
+  if (reduce) {
+    return (
+      <section id="methode" className="shell scroll-mt-20 py-24 md:py-36">
+        {head}
+        <ol className="grid gap-6 md:grid-cols-4">
+          {method.map((m, i) => (
+            <li key={i} className="border-t border-line pt-5">
+              <span className="mono text-xs text-accent">{String(i + 1).padStart(2, "0")} / 04</span>
+              <h3 className="mt-3 font-serif text-4xl">{t(m.title)}</h3>
+              <p className="mt-2 text-sm text-muted">{t(m.text)}</p>
+            </li>
+          ))}
+        </ol>
+      </section>
+    );
+  }
   return (
-    <section id="methode" className="shell scroll-mt-20 py-24 md:py-36">
-      <SectionHead index="04" label={t(ui.sections.method)} title={t(ui.methodTitle)} />
-      <ol className="grid gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
-        {method.map((m, i) => (
-          <Reveal as="li" key={i} delay={i * 0.08} className="flex min-h-64 flex-col bg-bg p-6 md:p-8">
-            <span className="mono text-xs text-accent">{String(i + 1).padStart(2, "0")} / 04</span>
-            <h3 className="mt-auto font-serif text-4xl md:text-5xl">
-              {t(m.title)}{i < method.length - 1 && <span className="text-muted"> →</span>}
-            </h3>
-            <p className="mt-3 text-sm leading-relaxed text-muted">{t(m.text)}</p>
-          </Reveal>
-        ))}
-      </ol>
+    <section id="methode" className="scroll-mt-20 pt-24 md:pt-36">
+      <div className="shell">{head}</div>
+      <div ref={ref} style={{ height: `${method.length * 70}vh` }} className="relative">
+        <div className="sticky top-0 flex h-[100svh] items-center overflow-hidden">
+          <div className="shell grid w-full items-center gap-8 md:grid-cols-12">
+            <div className="relative h-[34vh] md:col-span-6 md:h-[60vh]">
+              {method.map((_, i) => (
+                <span
+                  key={i}
+                  aria-hidden
+                  className="display text-outline-accent absolute inset-0 flex items-center text-[clamp(10rem,38vw,30rem)] leading-none transition-all duration-700"
+                  style={{ opacity: active === i ? 1 : 0, transform: `translateY(${(i - active) * 18}%)` }}
+                >
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+              ))}
+            </div>
+            <ol className="md:col-span-6">
+              {method.map((m, i) => (
+                <li key={i} className="border-t border-line py-5">
+                  <div className="flex items-baseline gap-4">
+                    <span className={`mono text-xs transition-colors duration-500 ${active === i ? "text-accent" : "text-muted"}`}>{String(i + 1).padStart(2, "0")}</span>
+                    <h3 className={`font-serif text-4xl transition-colors duration-500 md:text-6xl ${active === i ? "text-text" : "text-muted"}`}>{t(m.title)}</h3>
+                  </div>
+                  <p className={`ml-9 overflow-hidden text-muted transition-all duration-500 ${active === i ? "mt-2 max-h-24" : "max-h-0"}`}>{t(m.text)}</p>
+                </li>
+              ))}
+              <li aria-hidden className="relative h-px bg-line"><motion.span className="absolute inset-y-0 left-0 bg-accent" style={{ width: bar }} /></li>
+            </ol>
+          </div>
+        </div>
+      </div>
     </section>
   );
 }
@@ -256,20 +287,29 @@ export function Tools() {
     <section id="outils" className="scroll-mt-20 bg-bg-soft py-24 md:py-32">
       <div className="shell">
         <SectionHead index="05" label={t(ui.sections.tools)} title={t(ui.toolsTitle)} />
-        <ul className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-line bg-line sm:grid-cols-4">
-          {tools.map((tool) => (
-            <li key={tool.name} className="group flex aspect-[4/3] flex-col items-center justify-center gap-4 bg-bg-soft p-4 text-muted transition-colors hover:text-text">
-              {tool.logo ? (
-                <svg role="img" aria-label={`Logo ${tool.name}`} viewBox="0 0 24 24" className="h-9 w-9 fill-current transition-colors group-hover:fill-accent">
-                  <path d={logoPaths[tool.logo]} />
-                </svg>
-              ) : (
-                <span aria-hidden className="font-serif text-4xl italic leading-9 transition-colors group-hover:text-accent">{tool.name}</span>
-              )}
-              <span className="mono text-[11px]">{tool.name}</span>
-            </li>
+        <div className="space-y-12">
+          {toolGroups.map((g, gi) => (
+            <div key={g.title.fr} className="grid gap-6 md:grid-cols-12">
+              <h3 className="mono pt-2 text-xs text-muted md:col-span-3">
+                <span className="text-accent">{String(gi + 1).padStart(2, "0")}</span> — {t(g.title)}
+              </h3>
+              <ul className="grid grid-cols-3 gap-2 sm:grid-cols-4 md:col-span-9 lg:grid-cols-6">
+                {g.tools.map((tool, i) => (
+                  <Reveal as="li" key={tool.name} delay={i * 0.04} className="group flex aspect-square flex-col items-center justify-center gap-3 rounded-xl border border-line bg-bg p-3 text-center text-muted transition-colors hover:border-accent hover:text-text">
+                    {tool.logo ? (
+                      <svg role="img" aria-label={`Logo ${tool.name}`} viewBox="0 0 24 24" className="h-8 w-8 fill-current transition-colors group-hover:fill-accent">
+                        <path d={logoPaths[tool.logo]} />
+                      </svg>
+                    ) : (
+                      <span aria-hidden className="font-serif text-3xl italic leading-8 transition-colors group-hover:text-accent">{tool.name}</span>
+                    )}
+                    <span className="mono text-[10px] leading-tight">{tool.name}</span>
+                  </Reveal>
+                ))}
+              </ul>
+            </div>
           ))}
-        </ul>
+        </div>
       </div>
     </section>
   );
@@ -324,38 +364,7 @@ export function Background() {
   );
 }
 
-/* ---------------- 07. Témoignages ---------------- */
-export function Testimonials() {
-  const { t } = useLang();
-  return (
-    <section id="temoignages" className="scroll-mt-20 bg-bg-soft py-24 md:py-36">
-      <div className="shell">
-        <SectionHead index="07" label={t(ui.sections.testimonials)} title={t(ui.testimonialsTitle)} />
-        <ul className="grid gap-4 md:grid-cols-3">
-          {testimonials.map((q, i) => (
-            <Reveal as="li" key={i} delay={i * 0.08} className="flex flex-col rounded-2xl border border-line bg-bg p-6 md:p-8">
-              <span aria-hidden className="font-serif text-6xl leading-none text-accent">“</span>
-              <blockquote className="mt-2 flex-1 font-serif text-2xl text-muted">{t(q.quote)}</blockquote>
-              <div className="mt-8 flex items-center gap-4 border-t border-line pt-5">
-                {q.photo ? (
-                  <Image src={q.photo} alt={`Photo de ${q.name}`} width={48} height={48} className="h-12 w-12 rounded-full object-cover" />
-                ) : (
-                  <span aria-hidden className="todo-box mono flex h-12 w-12 items-center justify-center rounded-full border border-dashed border-line text-[9px] text-muted">photo</span>
-                )}
-                <div>
-                  <p className="text-sm">{q.name}</p>
-                  <p className="mono text-[11px] text-muted">{q.company}</p>
-                </div>
-              </div>
-            </Reveal>
-          ))}
-        </ul>
-      </div>
-    </section>
-  );
-}
-
-/* ---------------- 08. Contact ---------------- */
+/* ---------------- 07. Contact ---------------- */
 export function Contact() {
   const { t } = useLang();
   const [name, setName] = useState("");
@@ -375,8 +384,8 @@ export function Contact() {
   ];
   return (
     <section id="contact" className="shell scroll-mt-20 py-24 md:py-36">
-      <p className="mono mb-8 border-t border-line pt-6 text-xs text-muted"><span className="text-accent">08</span> — {t(ui.sections.contact)}</p>
-      <Reveal><h2 className="display text-[clamp(3.5rem,14vw,12rem)]">{t(contact.title)}</h2></Reveal>
+      <p className="mono mb-8 border-t border-line pt-6 text-xs text-muted"><span className="text-accent">07</span> — {t(ui.sections.contact)}</p>
+      <SplitText text={t(contact.title)} className="display text-[clamp(3.5rem,14vw,12rem)]" />
       <p className="mt-6 max-w-xl text-lg text-muted">{t(contact.text)}</p>
 
       <Reveal className="mt-12">

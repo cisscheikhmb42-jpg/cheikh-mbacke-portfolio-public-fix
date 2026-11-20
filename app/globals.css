@@ -59,10 +59,19 @@ body::before {
 .display { font-family: var(--font-serif); font-weight: 400; letter-spacing: -0.02em; line-height: 0.95; }
 .mono { font-family: var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase; }
 
+/* Intro : le rideau se lève même sans JavaScript (secours CSS) */
+.preloader { animation: preloader-out .9s cubic-bezier(.76,0,.24,1) 1.5s forwards; }
+@keyframes preloader-out { to { transform: translateY(-100%); } }
+
+/* Texte en contour */
+.text-outline { color: transparent; -webkit-text-stroke: 1px rgba(244,241,234,0.45); }
+.text-outline-accent { color: transparent; -webkit-text-stroke: 1px var(--accent); }
+
 /* Bandeau défilant */
 .marquee { display: flex; width: max-content; animation: marquee 38s linear infinite; }
 .marquee:hover { animation-play-state: paused; }
 @keyframes marquee { to { transform: translateX(-50%); } }
+.marquee-reverse { animation-direction: reverse; animation-duration: 46s; }
 
 /* Curseur personnalisé (desktop uniquement) */
 .has-cursor, .has-cursor * { cursor: none !important; }
@@ -77,5 +86,6 @@ body::before {
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .marquee { animation: none; }
+  .preloader { display: none; }
   *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
 }

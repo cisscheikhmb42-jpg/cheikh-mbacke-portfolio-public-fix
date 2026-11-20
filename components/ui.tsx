@@ -2,6 +2,7 @@
 
 import { motion, useMotionValue, useReducedMotion, useSpring } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
+import { SplitText } from "./motion";
 
 /**
  * Apparition douce au scroll.
@@ -60,9 +61,7 @@ export function SectionHead({ index, label, title, children }: { index: string; 
         <span className="text-accent">{index}</span> — {label}
       </p>
       <div className="md:col-span-9">
-        <Reveal>
-          <h2 className="display text-[clamp(2.5rem,7vw,5.75rem)]">{title}</h2>
-        </Reveal>
+        <SplitText text={title} className="display text-[clamp(2.5rem,7vw,5.75rem)]" />
         {children}
       </div>
     </div>
