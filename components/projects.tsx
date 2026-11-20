@@ -67,7 +67,13 @@ export function Projects() {
   const filters: { id: Filter; label: string }[] = [{ id: "all", label: t(ui.all) }, ...domains.map((d) => ({ id: d.id, label: t(d.label) }))];
 
   // Disposition bento : les études documentées occupent plus de place.
-  const bigSpans = ["lg:col-span-4 lg:row-span-2", "lg:col-span-2 lg:row-span-2", "lg:col-span-6"];
+  const bigSpans = ["lg:col-span-4 lg:row-span-2", "lg:col-span-2 lg:row-span-2", "lg:col-span-6", "lg:col-span-6"];
+  const todoCount = cases.filter((c) => c.todo).length;
+  // Remplit toujours la dernière rangée (grille de 6 colonnes).
+  const fullRows = Math.floor(todoCount / 3) * 3;
+  const rest = todoCount - fullRows;
+  const todoSpanAt = (k: number) => (k < fullRows ? "lg:col-span-2" : rest === 1 ? "lg:col-span-6" : "lg:col-span-3");
+  let todoIdx = 0;
   let big = 0;
 
   return (
@@ -92,7 +98,7 @@ export function Projects() {
         <h3 className="mono mb-5 text-xs text-muted">{t(ui.caseStudies)}</h3>
         <ul className="grid auto-rows-[minmax(260px,auto)] gap-4 sm:grid-cols-2 lg:grid-cols-6">
           {cases.map((c, i) => {
-            const span = c.todo ? "lg:col-span-2" : bigSpans[big++ % bigSpans.length];
+            const span = c.todo ? todoSpanAt(todoIdx++) : bigSpans[big++ % bigSpans.length];
             return (
               <Reveal as="li" key={c.id} delay={(i % 3) * 0.06} className={`${span} ${!c.todo && big === 3 ? "sm:col-span-2" : ""}`}>
                 <CaseCard c={c} n={i + 1} total={cases.length} onOpen={() => setOpenCase(c)} />
@@ -171,7 +177,7 @@ function CaseCard({ c, n, total, onOpen }: { c: CaseStudy; n: number; total: num
     >
       {img ? (
         <>
-          <Image src={img} alt={t(cover!.alt)} fill sizes="(max-width: 1024px) 100vw, 66vw" className="object-cover opacity-60 transition-all duration-700 group-hover:scale-[1.03] group-hover:opacity-80" />
+          <Image src={img} alt={t(cover!.alt)} fill sizes="(max-width: 1024px) 100vw, 66vw" className={`object-cover opacity-60 transition-all duration-700 group-hover:scale-[1.03] group-hover:opacity-80 ${cover!.width > cover!.height && cover!.kind === "image" ? "object-top" : ""}`} />
           <span className="absolute inset-0 bg-gradient-to-t from-bg via-bg/40 to-bg/10" aria-hidden />
         </>
       ) : (
@@ -238,6 +244,11 @@ function CaseModal({ c, onClose, onMedia, suspended }: { c: CaseStudy; onClose: 
           </button>
         </div>
         <p className="mt-6 max-w-2xl text-lg text-muted">{t(c.summary)}</p>
+        {c.link && (
+          <a href={c.link} target="_blank" rel="noreferrer" className="mt-6 inline-flex min-h-11 items-center gap-2 rounded-full bg-accent px-5 text-sm font-semibold text-bg">
+            {t(ui.visitSite)} <ArrowUpRight size={16} />
+          </a>
+        )}
         <dl className="mt-10 grid gap-px overflow-hidden rounded-xl border border-line bg-line md:grid-cols-3">
           {[
             [t(ui.role), t(c.role)],
@@ -322,6 +333,11 @@ function Lightbox({ items, index, onClose }: { items: MediaItem[]; index: number
       <div className="shell shrink-0 py-4 md:py-6">
         <p className="font-serif text-2xl md:text-3xl">{t(m.title)}</p>
         <p className="mt-1 text-sm text-muted">{t(m.description)}</p>
+        {m.href && (
+          <a href={m.href} target="_blank" rel="noreferrer" className="mt-3 inline-flex min-h-11 items-center gap-2 rounded-full bg-accent px-5 text-sm font-semibold text-bg">
+            {t(ui.visitSite)} <ArrowUpRight size={16} />
+          </a>
+        )}
       </div>
     </motion.div>
   );

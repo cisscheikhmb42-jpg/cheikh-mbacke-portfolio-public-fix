@@ -188,6 +188,7 @@ export type MediaItem = {
   title: T;
   description: T;
   alt: T;
+  href?: string; // lien externe (ex. site web en ligne)
 };
 
 const v = (n: number) => String(n).padStart(2, "0");
@@ -237,7 +238,44 @@ export const media: MediaItem[] = [
     description: { fr: "Vidéo originale réalisée pour Arrow Home Group, sans recours à l'IA.", en: "Original video made for Arrow Home Group, without AI." },
     alt: { fr: "Vidéo verticale tournée dans les locaux d'Arrow Home, logo de la marque en vitrine", en: "Vertical video filmed at Arrow Home's office, brand logo on display" },
   },
+  {
+    id: "arrow-video-realisations", kind: "video", src: "/videos/arrow-home/arrow-home-realisations.mp4", poster: "/videos/posters/arrow-home-realisations.webp", width: 720, height: 1280, brand: "arrow", domain: "content",
+    title: { fr: "Du plan à la réalité — vidéo publicitaire voix off", en: "From plan to reality — voice-over ad video" },
+    description: { fr: "Vidéo publicitaire avec voix off présentant les réalisations d'Arrow Home : Ecobank Thiaroye, Axil Hôtel, Villa Sangalkam, Projet P7 – Kalia.", en: "Voice-over ad video showcasing Arrow Home projects: Ecobank Thiaroye, Axil Hotel, Villa Sangalkam, Project P7 – Kalia." },
+    alt: { fr: "Vidéo verticale Arrow Home : plan d'architecte sur fond bleu, « Tout grand projet commence par un plan »", en: "Arrow Home vertical video: architect's plan on a blue background, “Every great project starts with a plan”" },
+  },
+  {
+    id: "arrow-video-ecobank", kind: "video", src: "/videos/arrow-home/arrow-home-agence-ecobank.mp4", poster: "/videos/posters/arrow-home-agence-ecobank.webp", width: 720, height: 1280, brand: "arrow", domain: "content",
+    title: { fr: "D'une ancienne maison à une agence Ecobank", en: "From an old house to an Ecobank branch" },
+    description: { fr: "Vidéo chantier en 8 étapes : la transformation d'une ancienne maison en agence Ecobank, des enduits aux finitions.", en: "8-step site video: turning an old house into an Ecobank branch, from rendering to finishing." },
+    alt: { fr: "Vidéo verticale Arrow Home : pièce vide en travaux, texte « On transforme. »", en: "Arrow Home vertical video: empty room under renovation, caption “We transform.”" },
+  },
+  {
+    id: "arrow-video-avant-apres", kind: "video", src: "/videos/arrow-home/arrow-home-avant-apres-130m2.mp4", poster: "/videos/posters/arrow-home-avant-apres-130m2.webp", width: 720, height: 1280, brand: "arrow", domain: "content",
+    title: { fr: "Avant / après — du brut au clé en main, 130 m²", en: "Before / after — from shell to turnkey, 130 m²" },
+    description: { fr: "Vidéo avant / après d'un appartement de 130 m² livré clé en main par les équipes Arrow Home.", en: "Before / after video of a 130 m² apartment delivered turnkey by Arrow Home's teams." },
+    alt: { fr: "Vidéo verticale Arrow Home : une femme présente l'appartement rénové, texte « Après : signé Arrow Home »", en: "Arrow Home vertical video: a woman presents the renovated apartment, caption “After: signed Arrow Home”" },
+  },
+  {
+    id: "arrow-site", kind: "image", src: "/images/sites/arrow-home-site.webp", width: 1440, height: 900, brand: "arrow", domain: "web", href: "https://arrow-home.vercel.app/fr",
+    title: { fr: "Site web Arrow Home Group", en: "Arrow Home Group website" },
+    description: { fr: "Site vitrine trilingue (FR / EN / 中文) : expertises, réalisations, méthode et demande de devis pré-remplie.", en: "Trilingual showcase website (FR / EN / 中文): services, projects, method and pre-filled quote request." },
+    alt: { fr: "Capture d'écran de la page d'accueil du site Arrow Home Group : « Construire aujourd'hui. Donner forme à demain. »", en: "Screenshot of the Arrow Home Group homepage: “Build today. Shape tomorrow.”" },
+  },
+  // — Sen AutomatIA —
+  {
+    id: "senautomatia-site", kind: "image", src: "/images/sites/sen-automatia.webp", width: 1440, height: 900, brand: "senautomatia", domain: "web", href: "https://sen-automatia-site.vercel.app/",
+    title: { fr: "Site web Sen AutomatIA", en: "Sen AutomatIA website" },
+    description: { fr: "Site de l'agence Sen AutomatIA : marketing digital et IA pour les PME et boutiques en ligne au Sénégal.", en: "Website of the Sen AutomatIA agency: digital marketing and AI for SMEs and online stores in Senegal." },
+    alt: { fr: "Capture d'écran de la page d'accueil de Sen AutomatIA : « votre agence de marketing digital et IA »", en: "Screenshot of the Sen AutomatIA homepage: “your digital marketing and AI agency”" },
+  },
   // — FORZA Luxury —
+  {
+    id: "forza-video-parfums", kind: "video", src: "/videos/forza/forza-parfums-encens.mp4", poster: "/videos/posters/forza-parfums-encens.webp", width: 720, height: 1280, brand: "forza", domain: "content",
+    title: { fr: "FORZA Parfums & Encens — vidéo publicitaire voix off", en: "FORZA Perfumes & Incense — voice-over ad video" },
+    description: { fr: "Vidéo publicitaire avec voix off pour la gamme FORZA Parfums & Encens : « Offrez-vous une signature olfactive ».", en: "Voice-over ad video for the FORZA Perfumes & Incense range: “Treat yourself to a signature scent”." },
+    alt: { fr: "Vidéo verticale FORZA : logo doré « FORZA Parfums & Encens » sur fond noir", en: "FORZA vertical video: gold “FORZA Parfums & Encens” logo on a black background" },
+  },
   {
     id: "forza-solutions", kind: "image", src: "/images/forza/forza-luxury.webp", width: 1124, height: 1399, brand: "forza", domain: "content",
     title: { fr: "Forza Luxury — Des solutions sur mesure", en: "Forza Luxury — Tailored solutions" },
@@ -334,22 +372,22 @@ export type CaseStudy = {
 
 export const caseStudies: CaseStudy[] = [
   {
-    id: "arrow", brand: "arrow", domains: ["marketing", "social", "content"], cover: "arrow-stade",
+    id: "arrow", brand: "arrow", domains: ["marketing", "social", "content", "web"], cover: "arrow-stade", link: "https://arrow-home.vercel.app/fr",
     kind: { fr: "Marketing BTP", en: "Construction marketing" },
     summary: { fr: "Communication digitale et création de contenu pour un acteur du BTP, de la construction et de l'immobilier.", en: "Digital communication and content for a construction and real estate company." },
-    role: { fr: "Gestion et animation des réseaux sociaux, calendriers éditoriaux, création de visuels, carrousels, Reels et vidéos, suivi des performances.", en: "Social media management, editorial calendars, visuals, carousels, Reels and videos, performance tracking." },
-    tools: ["Canva", "CapCut", "Meta Business Suite", "IA"],
+    role: { fr: "Gestion et animation des réseaux sociaux, calendriers éditoriaux, création de visuels, carrousels, Reels et vidéos publicitaires, création du site web, suivi des performances.", en: "Social media management, editorial calendars, visuals, carousels, Reels and ad videos, website creation, performance tracking." },
+    tools: ["Canva", "CapCut", "Meta Business Suite", "IA", "Vercel"],
     result: TODO,
-    mediaIds: ["arrow-stade", "arrow-stade-photo", "arrow-monday", "arrow-maouloud", "arrow-reves", "arrow-espaces", "arrow-video"],
+    mediaIds: ["arrow-site", "arrow-video-realisations", "arrow-video-ecobank", "arrow-video-avant-apres", "arrow-video", "arrow-stade", "arrow-stade-photo", "arrow-monday", "arrow-maouloud", "arrow-reves", "arrow-espaces"],
   },
   {
     id: "forza", brand: "forza", domains: ["marketing", "social", "content"], cover: "forza-byd",
     kind: { fr: "Luxury Services — publicités", en: "Luxury Services — ads" },
-    summary: { fr: "Direction artistique premium et créations publicitaires pour l'automobile, l'immobilier, le voyage et la conciergerie. Vidéos publicitaires : [À COMPLÉTER].", en: "Premium art direction and ad creatives for cars, real estate, travel and concierge. Ad videos: [TO BE COMPLETED]." },
+    summary: { fr: "Direction artistique premium, vidéo publicitaire et créations pour l'automobile, l'immobilier, le voyage, la conciergerie et les parfums.", en: "Premium art direction, ad video and creatives for cars, real estate, travel, concierge and perfumes." },
     role: { fr: "Création et publication de contenus promotionnels, campagnes pour la mobilité et les services premium.", en: "Creation and publishing of promotional content, campaigns for mobility and premium services." },
     tools: ["Canva", "Meta Business Suite", "IA"],
     result: TODO,
-    mediaIds: ["forza-byd", "forza-toyota", "forza-visa", "forza-vip", "forza-octobre-rose", "forza-solutions", "forza-immo-finition", "forza-immo-terrain", "forza-conciergerie"],
+    mediaIds: ["forza-video-parfums", "forza-byd", "forza-toyota", "forza-visa", "forza-vip", "forza-octobre-rose", "forza-solutions", "forza-immo-finition", "forza-immo-terrain", "forza-conciergerie"],
   },
   {
     id: "tornadoes", brand: "tornadoes", domains: ["content", "social"], cover: "tornadoes-07",
@@ -361,8 +399,11 @@ export const caseStudies: CaseStudy[] = [
     mediaIds: Array.from({ length: 7 }, (_, i) => `tornadoes-${v(i + 1)}`),
   },
   {
-    id: "senautomatia", brand: "senautomatia", domains: ["web"], todo: true,
-    kind: { fr: "Agence", en: "Agency" }, summary: TODO, role: TODO, tools: [], result: TODO, mediaIds: [],
+    id: "senautomatia", brand: "senautomatia", domains: ["web"], cover: "senautomatia-site", link: "https://sen-automatia-site.vercel.app/",
+    kind: { fr: "Agence — site web", en: "Agency — website" },
+    summary: { fr: "Site de l'agence Sen AutomatIA : marketing digital et IA pour les PME et boutiques en ligne au Sénégal.", en: "Website of the Sen AutomatIA agency: digital marketing and AI for SMEs and online stores in Senegal." },
+    role: { fr: "Conception et création du site web.", en: "Website design and build." },
+    tools: ["Vercel"], result: TODO, mediaIds: ["senautomatia-site"],
   },
   {
     id: "automatia", brand: "automatia", domains: ["web"], todo: true,
@@ -370,7 +411,9 @@ export const caseStudies: CaseStudy[] = [
   },
   {
     id: "touba", brand: "touba", domains: ["web"], todo: true,
-    kind: { fr: "Site e-commerce", en: "E-commerce website" }, summary: TODO, role: TODO, tools: [], result: TODO, mediaIds: [],
+    // ⚠ Lien de prévisualisation protégé par Vercel : remplacez-le par l'adresse publique du site.
+    link: "https://touba-mouride-trading-git-a-propos-access-path.vercel.app/fr",
+    kind: { fr: "Site e-commerce", en: "E-commerce website" }, summary: TODO, role: TODO, tools: ["Vercel"], result: TODO, mediaIds: [],
   },
   {
     id: "mmb", brand: "mmb", domains: [], todo: true,
@@ -499,6 +542,7 @@ export const ui = {
   prev: { fr: "Précédent", en: "Previous" },
   next: { fr: "Suivant", en: "Next" },
   video: { fr: "Vidéo", en: "Video" },
+  visitSite: { fr: "Voir le site en ligne", en: "Visit the live site" },
   noVisual: { fr: "Visuel [À COMPLÉTER]", en: "Visual [TO BE COMPLETED]" },
   noItems: { fr: "Aucune réalisation dans ce domaine pour l'instant — [À COMPLÉTER].", en: "No work in this category yet — [TO BE COMPLETED]." },
   downloadCv: { fr: "Télécharger mon CV", en: "Download my CV" },
