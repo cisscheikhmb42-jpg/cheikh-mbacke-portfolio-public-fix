@@ -67,7 +67,7 @@ export function Projects() {
   const filters: { id: Filter; label: string }[] = [{ id: "all", label: t(ui.all) }, ...domains.map((d) => ({ id: d.id, label: t(d.label) }))];
 
   // Disposition bento : les études documentées occupent plus de place.
-  const bigSpans = ["lg:col-span-4 lg:row-span-2", "lg:col-span-2 lg:row-span-2", "lg:col-span-6", "lg:col-span-6"];
+  const bigSpans = ["lg:col-span-4 lg:row-span-2", "lg:col-span-2 lg:row-span-2", "lg:col-span-6", "lg:col-span-3", "lg:col-span-3"];
   const todoCount = cases.filter((c) => c.todo).length;
   // Remplit toujours la dernière rangée (grille de 6 colonnes).
   const fullRows = Math.floor(todoCount / 3) * 3;
@@ -177,7 +177,7 @@ function CaseCard({ c, n, total, onOpen }: { c: CaseStudy; n: number; total: num
     >
       {img ? (
         <>
-          <Image src={img} alt={t(cover!.alt)} fill sizes="(max-width: 1024px) 100vw, 66vw" className={`object-cover opacity-60 transition-all duration-700 group-hover:scale-[1.03] group-hover:opacity-80 ${cover!.width > cover!.height && cover!.kind === "image" ? "object-top" : ""}`} />
+          <Image src={img} alt={t(cover!.alt)} fill sizes="(max-width: 1024px) 100vw, 66vw" className={`object-cover opacity-60 transition-all duration-700 group-hover:scale-[1.03] group-hover:opacity-80 ${cover!.domain === "web" ? "object-top" : ""}`} />
           <span className="absolute inset-0 bg-gradient-to-t from-bg via-bg/40 to-bg/10" aria-hidden />
         </>
       ) : (

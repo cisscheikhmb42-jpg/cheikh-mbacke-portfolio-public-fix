@@ -269,6 +269,13 @@ export const media: MediaItem[] = [
     description: { fr: "Site de l'agence Sen AutomatIA : marketing digital et IA pour les PME et boutiques en ligne au Sénégal.", en: "Website of the Sen AutomatIA agency: digital marketing and AI for SMEs and online stores in Senegal." },
     alt: { fr: "Capture d'écran de la page d'accueil de Sen AutomatIA : « votre agence de marketing digital et IA »", en: "Screenshot of the Sen AutomatIA homepage: “your digital marketing and AI agency”" },
   },
+  // — Firi —
+  {
+    id: "firi-app", kind: "image", src: "/images/sites/firi.webp", width: 585, height: 996, brand: "firi", domain: "web", href: "https://firi-ai-senegal.vercel.app/",
+    title: { fr: "Firi — « Je t'explique tes papiers »", en: "Firi — “I explain your papers”" },
+    description: { fr: "Application web mobile : on prend en photo un document et Firi l'explique simplement (« Dama lay firil sa kayit yi »). Les photos ne sont pas conservées.", en: "Mobile web app: take a photo of a document and Firi explains it simply (“Dama lay firil sa kayit yi”). Photos are not stored." },
+    alt: { fr: "Capture mobile de l'application Firi : bouton orange « Prendre en photo » et lien « Choisir une image »", en: "Mobile screenshot of the Firi app: orange “Take a photo” button and “Choose an image” link" },
+  },
   // — FORZA Luxury —
   {
     id: "forza-video-parfums", kind: "video", src: "/videos/forza/forza-parfums-encens.mp4", poster: "/videos/posters/forza-parfums-encens.webp", width: 720, height: 1280, brand: "forza", domain: "content",
@@ -406,6 +413,13 @@ export const caseStudies: CaseStudy[] = [
     tools: ["Vercel"], result: TODO, mediaIds: ["senautomatia-site"],
   },
   {
+    id: "firi", brand: "firi", domains: ["web"], cover: "firi-app", link: "https://firi-ai-senegal.vercel.app/",
+    kind: { fr: "Application web IA", en: "AI web app" },
+    summary: { fr: "Application web mobile : on prend en photo un document et Firi l'explique simplement (« Dama lay firil sa kayit yi »).", en: "Mobile web app: take a photo of a document and Firi explains it simply (“Dama lay firil sa kayit yi”)." },
+    role: { fr: "Conception et création de l'application web.", en: "Web app design and build." },
+    tools: ["Vercel", "IA"], result: TODO, mediaIds: ["firi-app"],
+  },
+  {
     id: "automatia", brand: "automatia", domains: ["web"], todo: true,
     kind: { fr: "Boutique d'ebooks", en: "Ebook store" }, summary: TODO, role: TODO, tools: [], result: TODO, mediaIds: [],
   },
@@ -421,10 +435,6 @@ export const caseStudies: CaseStudy[] = [
   },
   {
     id: "teranga", brand: "teranga", domains: [], todo: true,
-    kind: TODO, summary: TODO, role: TODO, tools: [], result: TODO, mediaIds: [],
-  },
-  {
-    id: "firi", brand: "firi", domains: [], todo: true,
     kind: TODO, summary: TODO, role: TODO, tools: [], result: TODO, mediaIds: [],
   },
 ];
